@@ -5,11 +5,11 @@ a simple ini file parser
 ```c
 dictionary_t *dict;
 
-// PARSE FILE
+// parse file
 INI_ERROR err  = ini_parse_file("./php.ini", &dict);
 
-// OR PARSE STRING
-// INI_ERROR err  = ini_parse_file("XXXX"/*something to parse*/, &dict);
+// OR parse string
+// INI_ERROR err  = ini_parse_string("XXXX"/*something to parse*/, &dict);
 
 if (err != SUCCESS) {
 	printf("Failed info:%s:\n", get_parse_error());
