@@ -257,15 +257,31 @@ static INI_ERROR ini_parse_parameter(char *line, bucket_t *section) {
     if (*p_line == '\n') {
         p_val[0] = '\0';
     } else {
+		char *p_quote_begin = NULL;
+		char *p_quote_end = NULL;
         do {
+			if (*p_line == ';') {
+				if (!p_quote_begin || p_quote_end) {
+					// comment
+					DEBUG_LOG("it's a comment in parameter line.");
+					break;		
+				}
+			}
             if (val_len < VAL_MAX_LEN) {
                 p_val[val_len++] = *p_line;
             }
+			if (*p_line == '"') {
+				if (p_quote_begin) {
+					p_quote_end = p_line;
+				} else {
+					p_quote_begin = p_line;
+				}
+			}
             ++p_line;
-        } while (!isspace(*p_line) || *p_line==' ');
+        } while (!isspace(*p_line) || *p_line==' ' || *p_line == '\t');
         char *p_val_p = p_val + val_len -1;
         while (p_val_p > p_val) {
-            if (*p_val_p == ' ') {
+            if (*p_val_p == ' ' || *p_val_p == '\t') {
                 --val_len;
             }
             --p_val_p;
@@ -274,7 +290,7 @@ static INI_ERROR ini_parse_parameter(char *line, bucket_t *section) {
         /*while (isspace(*p_line) && *p_line!='\n') {
             ++p_line;
         }*/
-        if (*p_line != '\n') {
+        if (*p_line != '\n' && *p_line != ';') {
             set_parse_error("Ini parse error: invalid parameter value.");
             return FAILURE;
         }
