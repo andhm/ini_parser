@@ -27,3 +27,7 @@ if (p_bucket) {
 // destroy the all
 ini_destroy(dict);
 ```
+##Installation
+```shell
+make && make example
+```
