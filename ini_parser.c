@@ -233,11 +233,10 @@ static INI_ERROR ini_parse_parameter(char *line, bucket_t *section) {
         set_parse_error("Ini parse error: invalid parameter key.");
         return FAILURE;
     }
-    if (*p_line == ' ') {
-        do {
-            ++p_line;
-        } while (*p_line == ' ');
-    }
+
+	while (*p_line == ' ' || *p_line == '\t') {
+		++p_line;
+	}
 
     if (*p_line != '=') {
         set_parse_error("Ini parse error: invalid parameter key.");
