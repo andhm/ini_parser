@@ -1,7 +1,7 @@
 # ini_parser
 a simple ini file parser
 
-##Usage
+## Usage
 ```c
 dictionary_t *dict;
 
@@ -27,7 +27,7 @@ if (p_bucket) {
 // destroy the all
 ini_destroy(dict);
 ```
-##Installation
+## Installation
 ```shell
 make && make example
 ```
